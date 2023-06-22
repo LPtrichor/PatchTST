@@ -7,10 +7,10 @@ from torch import nn
 from torch import Tensor
 import torch.nn.functional as F
 import numpy as np
-
 from layers.PatchTST_backbone import PatchTST_backbone
 from layers.PatchTST_layers import series_decomp
 
+from Rovy.FEB_Before_Patch import FBP
 
 class Model(nn.Module):
     def __init__(self, configs, max_seq_len:Optional[int]=1024, d_k:Optional[int]=None, d_v:Optional[int]=None, norm:str='BatchNorm', attn_dropout:float=0., 
@@ -86,7 +86,10 @@ class Model(nn.Module):
             x = res + trend
             x = x.permute(0,2,1)    # x: [Batch, Input length, Channel]
         else:
+            # 改进添加FBP模块
+            x = FBP(x)
             x = x.permute(0,2,1)    # x: [Batch, Channel, Input length]
             x = self.model(x)
             x = x.permute(0,2,1)    # x: [Batch, Input length, Channel]
         return x
+

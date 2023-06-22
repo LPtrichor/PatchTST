@@ -13,7 +13,7 @@ parser.add_argument('--random_seed', type=int, default=2021, help='random seed')
 # basic config
 parser.add_argument('--is_training', type=int, required=False, default=1, help='status')
 parser.add_argument('--model_id', type=str, required=False, default='test', help='model id')
-parser.add_argument('--model', type=str, required=False, default='Autoformer',
+parser.add_argument('--model', type=str, required=False, default='PatchTST',
                     help='model name, options: [Autoformer, Informer, Transformer]')
 
 # data loader
